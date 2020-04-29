@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { connect } from 'react-redux';
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
 function QuizScreen({ deck, navigation }) {
   const [questions, setQuestions] = useState([]);
@@ -9,6 +10,7 @@ function QuizScreen({ deck, navigation }) {
 
   useEffect(() => {
     setQuestions(deck.questions);
+    clearLocalNotification().then(setLocalNotification);
   }, []);
 
   if (!deck.questions) {

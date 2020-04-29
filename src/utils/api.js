@@ -47,3 +47,11 @@ export const saveCard = async (deck, card) => {
     alert('Failed to add a new card to the storage!', e);
   }
 };
+
+export const RemoveData = async () => {
+  try {
+    await AsyncStorage.removeItem(STORAGE_KEY);
+  } catch (error) {
+    alert('Couldnt remove data, error happened! ', error);
+  }
+};

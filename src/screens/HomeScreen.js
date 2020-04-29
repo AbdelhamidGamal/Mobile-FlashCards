@@ -5,10 +5,11 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Button,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { reciveData } from '../actions';
-import { getDecks } from '../utils/api';
+import { getDecks, RemoveData } from '../utils/api';
 import { setLocalNotification } from '../utils/helpers';
 
 function Home({ navigation, decks, dispatch }) {
@@ -21,6 +22,11 @@ function Home({ navigation, decks, dispatch }) {
     const res = await getDecks();
     dispatch(reciveData(res));
   }
+
+  const removeAllData = () => {
+    RemoveData();
+    dispatch(reciveData({}));
+  };
 
   return (
     <ScrollView>
@@ -37,6 +43,9 @@ function Home({ navigation, decks, dispatch }) {
           } cards`}</Text>
         </View>
       ))}
+      {Object.keys(decks).length > 0 ? (
+        <Button title='Clear Storage' onPress={removeAllData} />
+      ) : null}
     </ScrollView>
   );
 }

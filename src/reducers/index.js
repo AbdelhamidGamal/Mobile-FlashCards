@@ -3,7 +3,7 @@ import { RECIVE_DATA, ADD_DECK, ADD_CARD } from '../actions';
 export default function (state = {}, action) {
   switch (action.type) {
     case RECIVE_DATA:
-      return { ...state, ...action.payload };
+      return { ...action.payload };
     case ADD_DECK:
       return { ...state, [action.payload]: { title: action.payload } };
     case ADD_CARD:

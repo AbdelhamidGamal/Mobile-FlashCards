@@ -21,7 +21,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name='Home' component={HomeScreen} />
+      <HomeStack.Screen name='Decks' component={HomeScreen} />
       <HomeStack.Screen
         options={({ route }) => ({ title: route.params.name })}
         name='DeckScreen'
@@ -42,7 +42,7 @@ export default function App() {
         <Tab.Navigator>
           <Tab.Screen
             style={{ padding: 5 }}
-            name='Home'
+            name='Decks'
             component={HomeStackScreen}
             options={{
               tabBarIcon: () => (

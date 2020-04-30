@@ -33,19 +33,23 @@ function NewCardScreen({ dispatch, route, navigation }) {
         style={styles.input}
         onChangeText={(text) => setAnswer(text)}
       />
-      <Button title='Submit' onPress={submit} />
+      <View style={{ width: 150, marginTop: 20 }}>
+        <Button title='Submit' onPress={submit} color='black' />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
+    width: 300,
     borderWidth: 2,
     padding: 10,
   },
   container: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     textAlign: 'center',

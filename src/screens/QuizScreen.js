@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { clearLocalNotification, setLocalNotification } from '../utils/helpers';
 
@@ -18,7 +18,7 @@ function QuizScreen({ deck, navigation }) {
   }
 
   return (
-    <View>
+    <View style={styles.takeFullSpace}>
       {questions.length === 0 ? (
         <View>
           <Text>Your score is {(Score / deck.questions.length) * 100} % </Text>
@@ -39,45 +39,80 @@ function QuizScreen({ deck, navigation }) {
           />
         </View>
       ) : (
-        <View>
-          <Text>{`${questions.length} of ${deck.questions.length} Remaining!`}</Text>
-          {viewQuestion ? (
+        <View style={styles.takeFullSpace}>
+          <Text
+            style={styles.counter}
+          >{`${questions.length} / ${deck.questions.length} `}</Text>
+          <View style={styles.innerContainer}>
             <View>
-              <Text>{questions[0].question}</Text>
+              {viewQuestion ? (
+                <View>
+                  <Text style={styles.questionText}>
+                    {questions[0].question}
+                  </Text>
+
+                  <TouchableOpacity
+                    onPress={() => setviewQuestion(!viewQuestion)}
+                  >
+                    <Text style={{ textAlign: 'center' }}>view Answer</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View>
+                  <Text style={styles.questionText}>{questions[0].answer}</Text>
+                  <TouchableOpacity
+                    onPress={() => setviewQuestion(!viewQuestion)}
+                  >
+                    <Text>view Question</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            </View>
+            <View style={{ width: 150 }}>
               <Button
-                title='view Answer'
-                onPress={() => setviewQuestion(!viewQuestion)}
+                title='Correct!'
+                color='green'
+                onPress={() => {
+                  setScore(Score + 1);
+                  setviewQuestion(true);
+                  setQuestions(questions.slice(1));
+                }}
+              />
+              <View style={{ margin: 5 }} />
+              <Button
+                color='red'
+                title='Incorrect!'
+                onPress={() => {
+                  setviewQuestion(true);
+                  setQuestions(questions.slice(1));
+                }}
               />
             </View>
-          ) : (
-            <View>
-              <Text>{questions[0].answer}</Text>
-              <Button
-                title='view Question'
-                onPress={() => setviewQuestion(!viewQuestion)}
-              />
-            </View>
-          )}
-          <Button
-            title='Correct!'
-            onPress={() => {
-              setScore(Score + 1);
-              setviewQuestion(true);
-              setQuestions(questions.slice(1));
-            }}
-          />
-          <Button
-            title='Incorrect!'
-            onPress={() => {
-              setviewQuestion(true);
-              setQuestions(questions.slice(1));
-            }}
-          />
+          </View>
         </View>
       )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  takeFullSpace: {
+    flex: 1,
+  },
+  counter: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  innerContainer: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  questionText: {
+    textAlign: 'center',
+    fontSize: 45,
+  },
+});
 
 function mapStateToProps(state, props) {
   return {

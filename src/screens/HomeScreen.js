@@ -30,21 +30,20 @@ function Home({ navigation, decks, dispatch }) {
 
   return (
     <ScrollView>
-      <Text style={styles.title}>Deck List</Text>
       {Object.keys(decks).map((deck) => (
         <View style={styles.smallcard} key={deck}>
           <TouchableOpacity
             onPress={() => navigation.navigate('DeckScreen', { name: deck })}
           >
-            <Text style={{ fontSize: 40 }}>{decks[deck].title}</Text>
+            <Text style={styles.titles}>{decks[deck].title}</Text>
           </TouchableOpacity>
-          <Text>{`${
+          <Text style={styles.smallText}>{`${
             decks[deck].questions ? decks[deck].questions.length : 0
           } cards`}</Text>
         </View>
       ))}
       {Object.keys(decks).length > 0 ? (
-        <Button title='Clear Storage' onPress={removeAllData} />
+        <Button color='gray' title='Clear Storage' onPress={removeAllData} />
       ) : null}
     </ScrollView>
   );
@@ -59,12 +58,18 @@ const styles = StyleSheet.create({
   smallcard: {
     justifyContent: 'center',
     alignItems: 'center',
+    borderBottomWidth: 2,
+    padding: 10,
+    paddingBottom: 20,
+    margin: 10,
   },
-  title: {
-    textAlign: 'center',
-    fontSize: 30,
-    color: 'red',
-    fontStyle: 'italic',
+  titles: {
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  smallText: {
+    fontSize: 15,
+    color: 'gray',
   },
 });
 

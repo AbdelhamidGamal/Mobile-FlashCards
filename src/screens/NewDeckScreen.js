@@ -8,24 +8,27 @@ function NewDeck({ dispatch, navigation }) {
   const [name, setName] = useState('');
 
   function submit() {
+    const deckTitle = name;
     if (!name) {
       return alert('Please Enter a Name!');
     }
-    dispatch(addDeck(name));
-    saveDeck(name);
-
-    navigation.navigate('DeckScreen', { name });
+    dispatch(addDeck(deckTitle));
+    saveDeck(deckTitle);
+    setName('');
+    navigation.navigate('DeckScreen', { name: deckTitle });
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Deck Name</Text>
+      <Text style={styles.title}>What is the title of your new deck?</Text>
       <TextInput
         style={styles.input}
         value={name}
         onChangeText={(text) => setName(text)}
       />
-      <Button title='Submit' onPress={submit} />
+      <View style={{ width: 150, marginTop: 30 }}>
+        <Button title='Submit' onPress={submit} color='black' />
+      </View>
     </View>
   );
 }
@@ -38,13 +41,14 @@ const styles = StyleSheet.create({
   },
   input: {
     width: 200,
-    height: 40,
+    height: 30,
     borderWidth: 1,
   },
   title: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: 'bold',
     margin: 20,
+    textAlign: 'center',
   },
   btn: {
     margin: 10,

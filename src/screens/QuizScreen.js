@@ -20,23 +20,29 @@ function QuizScreen({ deck, navigation }) {
   return (
     <View style={styles.takeFullSpace}>
       {questions.length === 0 ? (
-        <View>
-          <Text>Your score is {(Score / deck.questions.length) * 100} % </Text>
-          <Button
-            title='Restart Quiz!'
-            onPress={() => {
-              setScore(0);
-              setviewQuestion(true);
-              setQuestions(deck.questions);
-              navigation.navigate('QuizScreen', { deck: deck.title });
-            }}
-          />
-          <Button
-            title='Go Back To Deck View'
-            onPress={() =>
-              navigation.navigate('DeckScreen', { name: deck.title })
-            }
-          />
+        <View style={styles.innerContainer}>
+          <Text style={styles.score}>
+            Your score is {(Score / deck.questions.length) * 100} %{' '}
+          </Text>
+          <View>
+            <Button
+              title='Restart Quiz!'
+              onPress={() => {
+                setScore(0);
+                setviewQuestion(true);
+                setQuestions(deck.questions);
+                navigation.navigate('QuizScreen', { deck: deck.title });
+              }}
+            />
+            <View style={{ margin: 5 }} />
+            <Button
+              title='Go Back To Deck View'
+              color='black'
+              onPress={() =>
+                navigation.navigate('DeckScreen', { name: deck.title })
+              }
+            />
+          </View>
         </View>
       ) : (
         <View style={styles.takeFullSpace}>
@@ -111,6 +117,9 @@ const styles = StyleSheet.create({
   questionText: {
     textAlign: 'center',
     fontSize: 45,
+  },
+  score: {
+    fontSize: 20,
   },
 });
 
